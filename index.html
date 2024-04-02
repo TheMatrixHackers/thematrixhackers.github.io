@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Matrix Hackers</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .matrix-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:black;
+    overflow: hidden;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .matrix-effect div {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .matrix-effect span {
+    color: green;
+    font-size: 20px;
+    user-select: none;
+    opacity: 0.7;
+  }
+  .center-text {
+    z-index: 9999;
+    font-size: 5em;
+    color: green;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="matrix-effect"></div>
+<div class="center-text">The Matrix Hackers</div>
+<script>
+  const matrixEffect = document.querySelector('.matrix-effect');
+  const symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()_+";
+  
+  function randomSymbol() {
+    return symbols.charAt(Math.floor(Math.random() * symbols.length));
+  }
+  
+  function createSymbolLine() {
+    const line = document.createElement('div');
+    for (let i = 0; i < window.innerWidth / 20; i++) {
+      const symbolSpan = document.createElement('span');
+      symbolSpan.textContent = randomSymbol();
+      line.appendChild(symbolSpan);
+    }
+    matrixEffect.appendChild(line);
+  }
+  
+  function animateSymbols() {
+    const lines = document.querySelectorAll('.matrix-effect div');
+    lines.forEach(line => {
+      const spans = line.querySelectorAll('span');
+      spans.forEach(span => span.textContent = randomSymbol());
+    });
+  }
+  
+  // Create initial lines
+  for (let i = 0; i < window.innerHeight / 20; i++) {
+    createSymbolLine();
+  }
+  
+  setInterval(animateSymbols, 100);
+</script>
+</body>
+</html>
